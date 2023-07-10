@@ -9,7 +9,7 @@ const auth = async (req, res, next) => {
   const authHeader = req.headers.authorization || "";
   const [type, token] = authHeader.split(" ");
 
-  if (type !== "Bearer") {
+  if (type !== "Bearer" || !token) {
     throw RequestError(401, "Token type is not valid!");
   }
 
