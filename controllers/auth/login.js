@@ -9,11 +9,9 @@ const { JWT_SECRET } = process.env;
 const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (!user) {
-    throw RequestError(401, "Incorrect login or password");
-  }
   const passwordCompare = await bcrypt.compare(password, user.password);
-  if (!passwordCompare) {
+
+  if (!user && !passwordCompare) {
     throw RequestError(401, "Incorrect login or password");
   }
 
